@@ -84,7 +84,7 @@
     <!-- ---------- BEAT 1 · THE PROMISE (still, black label) ---------- -->
     <div class="movie-copy" data-copy="0" data-side="left">
       <div class="movie-copy__inner">
-        <p class="mini">Mineral-Infused Still Water</p>
+        <p class="mini">Mineral-Infused Water</p>
         <h1>You've had water.<br><em>Now try hydration.</em></h1>
         <p class="sub">Pure, mineral-rich hydration inspired by nature, and perfected by science — for people who move with purpose.</p>
         <div class="actions">
@@ -99,7 +99,7 @@
          so the still range gets its own moment ---------- -->
     <div class="movie-copy" data-copy="1" data-side="right">
       <div class="movie-copy__inner">
-        <p class="mini">Still · Black Cap</p>
+        <p class="mini">Still</p>
         <h2>Mineral Infused<br><em>Still Water.</em></h2>
         <p class="sub">Purified to a clean, consistent base, then infused with 84 essential minerals and trace elements — balanced to a gentle alkaline level that mirrors your body's natural state. Smooth, bioavailable, true hydration from the first sip.</p>
         <div class="facts">
@@ -239,12 +239,23 @@
   </div>
 </section>
 
-<!-- ===================== POST-MOVIE: GALLERY ===================== -->
-<section class="section section--cream">
+<!-- ===================== POST-MOVIE: GALLERY / INSTAGRAM =====================
+     The grid below is the fallback: brand photography, shown whenever the
+     live feed is unavailable. js/instagram.js replaces it with real posts
+     once a token is configured, and only then relabels it as Instagram.
+     ========================================================================= -->
+<section class="section section--cream" id="instagram">
   <div class="container">
-    <span class="eyebrow reveal">The Experience</span>
-    <h2 class="display-md reveal" data-d="1" style="margin:26px 0 56px;">Hydration that <em class="italic">keeps up.</em></h2>
-    <div class="gallery">
+    <div class="ig-head">
+      <div>
+        <span class="eyebrow reveal" data-ig-label>The Experience</span>
+        <h2 class="display-md reveal" data-d="1" style="margin:26px 0 0;">Hydration that <em class="italic">keeps up.</em></h2>
+      </div>
+      <a class="btn btn--dark ig-follow" href="https://www.instagram.com/peakhydrationza/"
+         target="_blank" rel="noopener" data-ig-follow hidden>Follow <span class="arrow">→</span></a>
+    </div>
+
+    <div class="gallery" data-instagram data-handle="peakhydrationza">
       <figure class="wide reveal"><img src="assets/gap.jpg" alt="Clean, mineralised water" loading="lazy"></figure>
       <figure class="tall reveal" data-d="1"><img src="assets/lifestyle-1.jpg" alt="Peak Hydration in action" loading="lazy"></figure>
       <figure class="reveal" data-d="2"><img src="assets/lifestyle-2.jpg" alt="Peak Hydration" loading="lazy"></figure>
@@ -294,6 +305,7 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/instagram.js"></script>
 <script src="js/scrub.js"></script>
 </body>
 </html>

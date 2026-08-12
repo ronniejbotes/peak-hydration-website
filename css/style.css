@@ -29,7 +29,7 @@
   --container: 1240px;
   --gutter: clamp(20px, 5vw, 64px);
   --radius: 18px;
-  --nav-h: 84px;
+  --nav-h: 92px;
 
   /* Motion */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -146,15 +146,24 @@ h1, h2, h3, .display {
   border-bottom-color: var(--line);
 }
 .header--dark.scrolled { background: rgba(10,10,10,0.9); border-bottom-color: var(--line-dark); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+/* The header runs wider than the body container — the wordmark is a very
+   wide lockup (1920x183, ~10.5:1), so at the 1240px container it crowded
+   the nav straight up against the logo. */
+.header .container { max-width: 1560px; }
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(28px, 5vw, 88px);
+}
 .brand { display: flex; align-items: center; }
-.brand img { height: 40px; width: auto; }
+.brand img { height: 30px; width: auto; }
 .header--dark .brand { filter: brightness(0) invert(1); }
-.nav-links { display: flex; align-items: center; gap: 44px; }
+.nav-links { display: flex; align-items: center; gap: clamp(30px, 2.9vw, 54px); }
 .nav-links a {
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   opacity: 0.75;
   position: relative;
@@ -170,7 +179,7 @@ h1, h2, h3, .display {
 .nav-links a:hover, .nav-links a.active { opacity: 1; }
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 .header--dark .nav-links a { color: var(--paper); }
-.nav-cta { margin-left: 8px; }
+.nav-cta { margin-left: clamp(6px, 1.6vw, 26px); }
 
 /* Mobile nav */
 .nav-toggle { display: none; flex-direction: column; gap: 6px; padding: 10px; z-index: 120; }
@@ -544,3 +553,57 @@ h1, h2, h3, .display {
 /* Pillars reuse the existing card component above — this only spaces the
    homepage instance away from the comparison table. */
 .pillars { margin-top: clamp(56px, 7vw, 88px); }
+
+/* ---------- Instagram gallery ---------- */
+.ig-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.ig-follow[hidden] { display: none; }
+
+/* Live feed: even square tiles, replacing the editorial fallback layout */
+.gallery.ig-grid--live {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.ig-tile {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--paper-3);
+}
+.ig-tile img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease);
+}
+.ig-tile:hover img { transform: scale(1.05); }
+.ig-tile::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: rgba(10,10,10,0);
+  transition: background 0.4s var(--ease);
+}
+.ig-tile:hover::after { background: rgba(10,10,10,0.14); }
+.ig-tile__badge {
+  position: absolute; top: 10px; right: 12px;
+  font-size: 13px; line-height: 1;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .gallery.ig-grid--live { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 560px) {
+  .gallery.ig-grid--live { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .ig-head { margin-bottom: 36px; }
+}

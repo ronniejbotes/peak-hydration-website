@@ -29,3 +29,20 @@ ErrorDocument 404 /404.html
   Header set X-Frame-Options "SAMEORIGIN"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
+# Protect the Instagram token and its cache.
+# PHP is normally executed rather than served, but if PHP were ever disabled
+# the config would be readable as plain text — this closes that window.
+<FilesMatch "^instagram-config(\.sample)?\.php$">
+  Require all denied
+</FilesMatch>
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^cache/ - [F,L]
+</IfModule>
+
+# Video should stream and seek — Range requests must be allowed
+<IfModule mod_headers.c>
+  <FilesMatch "\.(mp4|webm)$">
+    Header set Accept-Ranges "bytes"
+  </FilesMatch>
+</IfModule>
