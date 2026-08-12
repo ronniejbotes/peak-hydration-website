@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peak Hydration — You've had water. Now try hydration.</title>
+<meta name="description" content="Pure, mineral-rich hydration inspired by nature and perfected by science. Scroll through the film: watch the bottle spin, transform to sparkling, and burst into a splash. Peak Hydration — 84 minerals, pH 7, proudly South African.">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/movie.css">
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="header header--dark">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand" aria-label="Peak Hydration home">
+      <img src="assets/logo.png" alt="Peak Hydration">
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html" class="active">Home</a>
+      <a href="our-water.html">Our Water</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a href="products.html" class="btn btn--light nav-cta">Hydrate Now</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===================== MOBILE MENU ===================== -->
+<div class="mobile-menu" aria-hidden="true">
+  <a href="index.html">Home</a>
+  <a href="our-water.html">Our Water</a>
+  <a href="products.html">Products</a>
+  <a href="contact.html">Contact</a>
+  <div class="m-social">
+    <a href="https://www.instagram.com/peakhydrationza/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/profile.php?id=100063633965726" target="_blank" rel="noopener">Facebook</a>
+  </div>
+</div>
+
+<!-- =====================================================================
+     THE MOVIE — one continuous scroll-scrubbed film
+     Three clips chained on a single timeline inside a single pinned stage.
+     The picture never unsticks, so there is no seam at the hand-overs.
+     ===================================================================== -->
+<div class="movie" id="movie" aria-label="Peak Hydration film">
+
+  <!-- scroll targets for #move-1/2/3 — JS parks them at the right moment -->
+  <span class="movie-anchor" id="move-1"></span>
+  <span class="movie-anchor" id="move-2"></span>
+  <span class="movie-anchor" id="move-3"></span>
+
+  <div class="movie-stage">
+
+    <video class="movie-clip is-live" data-clip="0" data-dur="8.042"
+           src="assets/video/clip1.mp4" poster="assets/video/clip1-poster.jpg"
+           preload="auto" muted playsinline disablepictureinpicture
+           disableremoteplayback tabindex="-1" aria-hidden="true"></video>
+    <video class="movie-clip" data-clip="1" data-dur="8.042"
+           src="assets/video/clip2.mp4" poster="assets/video/clip2-poster.jpg"
+           preload="auto" muted playsinline disablepictureinpicture
+           disableremoteplayback tabindex="-1" aria-hidden="true"></video>
+    <video class="movie-clip" data-clip="2" data-dur="9.042"
+           src="assets/video/clip3.mp4" poster="assets/video/clip3-poster.jpg"
+           preload="auto" muted playsinline disablepictureinpicture
+           disableremoteplayback tabindex="-1" aria-hidden="true"></video>
+
+    <div class="movie-scrim movie-scrim--dark" aria-hidden="true"></div>
+    <div class="movie-scrim movie-scrim--light" aria-hidden="true"></div>
+
+    <!-- ---------- BEAT 1 · STILL ---------- -->
+    <div class="movie-copy" data-copy="0">
+      <div class="movie-copy__inner">
+        <p class="mini">Mineral-Infused Water</p>
+        <h1>You've had water.<br><em>Now try hydration.</em></h1>
+        <p class="sub">Pure, mineral-rich hydration inspired by nature and perfected by science. Fully purified, precisely remineralised — for people who move with purpose.</p>
+        <div class="facts">
+          <div class="fact"><strong>84</strong><span>Minerals &amp; trace elements</span></div>
+          <div class="fact"><strong>pH 7</strong><span>Gentle alkaline</span></div>
+          <div class="fact"><strong>7-stage</strong><span>Advanced purification</span></div>
+        </div>
+        <div class="actions">
+          <a href="#move-2" class="btn btn--solid">Meet the Sparkling <span class="arrow">↓</span></a>
+          <a href="products.html" class="btn btn--ghost">Explore Products</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- BEAT 2 · SPARKLING ---------- -->
+    <div class="movie-copy" data-copy="1">
+      <div class="movie-copy__inner">
+        <p class="mini">Mineral-Infused Sparkling</p>
+        <h2>The same water, <em>with a sparkle.</em></h2>
+        <p class="sub">Built on the same clean, mineral-rich base, carbonated only after mineralisation — for a cleaner taste and fine, lasting bubbles. Same 84 minerals. Same pH&nbsp;7. Newly alive.</p>
+        <div class="facts">
+          <div class="fact"><strong>White cap</strong><span>Sparkling edition</span></div>
+          <div class="fact"><strong>Fine</strong><span>Bubbles that last</span></div>
+          <div class="fact"><strong>pH 7</strong><span>Gentle alkaline</span></div>
+        </div>
+        <div class="actions">
+          <a href="#move-3" class="btn btn--solid">Keep Watching <span class="arrow">↓</span></a>
+          <a href="products.html#sparkling" class="btn btn--ghost">Explore Sparkling</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- BEAT 3 · JOIN THE MOVEMENT ---------- -->
+    <div class="movie-copy cta-copy" data-copy="2">
+      <div class="movie-copy__inner">
+        <p class="mini">Join the Movement</p>
+        <h2>Real minerals. <em>Real hydration.</em></h2>
+        <p class="sub">Sharper focus. Total support. Pure balance. Be the first to know when Peak Hydration reaches your town.</p>
+        <form class="form" action="send-message.php" method="POST" data-form>
+          <input type="hidden" name="subject" value="Website — Join the movement">
+          <input type="hidden" name="form" value="newsletter">
+          <input type="email" name="email" placeholder="Your email address" required aria-label="Email">
+          <button type="submit" class="btn btn--solid">Notify Me</button>
+        </form>
+        <p class="form-note" data-form-status></p>
+      </div>
+    </div>
+
+    <div class="movie-hint" aria-hidden="true"><span class="mouse"></span>Scroll to pour</div>
+  </div>
+</div>
+
+<!-- overall film progress rail -->
+<div class="movie-progress" aria-hidden="true"><div class="movie-progress__fill"></div></div>
+
+<!-- ===================== POST-MOVIE: THE RANGE ===================== -->
+<section class="section section--cream">
+  <div class="container">
+    <span class="eyebrow reveal">The Range</span>
+    <h2 class="display-md reveal" data-d="1" style="max-width:12em;margin:26px 0 56px;">Two expressions. <em class="italic">One perfect base.</em></h2>
+    <div class="products-grid">
+      <article class="product-card product-card--still reveal">
+        <div class="product-card__bg"><img src="assets/still-square.jpg" alt="Mineral infused still water" loading="lazy"></div>
+        <div class="product-card__body">
+          <span class="tag">Still · Black Cap</span>
+          <h3>Mineral Infused Still Water</h3>
+          <p class="meta">Purified, then rebuilt with 84 essential minerals — smooth, bioavailable, true hydration from the first sip.</p>
+          <div class="product-card__links">
+            <a href="products.html#still" class="btn btn--light">Explore <span class="arrow">→</span></a>
+            <a href="contact.html">Enquire</a>
+          </div>
+        </div>
+      </article>
+      <article class="product-card product-card--spark reveal" data-d="1">
+        <div class="product-card__bg"><img src="assets/sparkling-square.jpg" alt="Mineral infused sparkling water" loading="lazy"></div>
+        <div class="product-card__body">
+          <span class="tag">Sparkling · White Cap</span>
+          <h3>Mineral Infused Sparkling Water</h3>
+          <p class="meta">A balanced blend of trace minerals on the same clean base — carbonated only after mineralisation for crisp, lasting bubbles.</p>
+          <div class="product-card__links">
+            <a href="products.html#sparkling" class="btn btn--dark">Explore <span class="arrow">→</span></a>
+            <a href="contact.html">Enquire</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== POST-MOVIE: GALLERY ===================== -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow reveal">The Experience</span>
+    <h2 class="display-md reveal" data-d="1" style="margin:26px 0 56px;">Hydration that <em class="italic">keeps up.</em></h2>
+    <div class="gallery">
+      <figure class="wide reveal"><img src="assets/gap.jpg" alt="Clean, mineralised water" loading="lazy"></figure>
+      <figure class="tall reveal" data-d="1"><img src="assets/lifestyle-1.jpg" alt="Peak Hydration in action" loading="lazy"></figure>
+      <figure class="reveal" data-d="2"><img src="assets/lifestyle-2.jpg" alt="Peak Hydration" loading="lazy"></figure>
+      <figure class="reveal" data-d="2"><img src="assets/purified.jpg" alt="Waterfall source" loading="lazy"></figure>
+      <figure class="reveal" data-d="3"><img src="assets/sparkling-wide.jpg" alt="Sparkling water" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/logo.png" alt="Peak Hydration">
+        <p class="footer__about">Pure, mineral-rich hydration inspired by nature and perfected by science. Proudly South African.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="our-water.html">Our Water</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/peakhydrationza/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.facebook.com/profile.php?id=100063633965726" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in Touch</h4>
+        <ul class="footer__contact">
+          <li><span>Call</span><a href="tel:+27844065329">+27 (0) 84 406 5329</a></li>
+          <li><span>Visit</span>250 End Street, Clubview<br>Gauteng, 0157</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span data-year>2026</span> Peak Hydration. All rights reserved.</span>
+      <span>Proudly South African · <a href="index.html">peakhydration.co.za</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/scrub.js"></script>
+</body>
+</html>

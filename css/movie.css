@@ -1,0 +1,236 @@
+/* ==========================================================================
+   PEAK HYDRATION — Scroll-scrub cinematic landing page
+   ONE continuous film. Three clips chained inside a single pinned stage,
+   so the picture never unsticks and there is no seam between them.
+   Text/UI colour is driven from the measured luminance of the footage,
+   so contrast follows the picture instead of flipping per section.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   The track. Its height IS the length of the film.
+   Total = 100vh (the pinned viewport) + scrub length + tail hold.
+   -------------------------------------------------------------------------- */
+/* colour signal — JS interpolates these from the footage luminance.
+   They live on :root because the fixed header reads them too. */
+:root {
+  --mv-fg: #ffffff;
+  --mv-bg: #0a0a0a;
+  --mv-muted: rgba(255,255,255,0.62);
+  --mv-line: rgba(255,255,255,0.28);
+  --mv-bar: rgba(10,10,10,0.9);
+  --mv-inv: 1;
+}
+
+.movie {
+  position: relative;
+  --film-scrub: 860vh;
+  --film-tail: 60vh;
+  height: calc(100vh + var(--film-scrub) + var(--film-tail));
+}
+
+/* invisible scroll targets so #move-1/2/3 still land in the right place */
+.movie-anchor {
+  position: absolute;
+  left: 0; width: 1px; height: 1px;
+  pointer-events: none; opacity: 0;
+}
+
+.movie-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh; height: 100svh;
+  overflow: hidden;
+  background: #000;
+  isolation: isolate;
+}
+
+/* -------- the picture: all clips layered, live one on top -------- */
+.movie-clip {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  /* every clip stays painted — the live one simply covers the others,
+     so a boundary swap can never flash black */
+}
+.movie-clip.is-live { z-index: 2; }
+
+/* -------- legibility scrims, crossfaded by JS -------- */
+.movie-scrim {
+  position: absolute; inset: 0; z-index: 3;
+  pointer-events: none;
+  will-change: opacity;
+}
+.movie-scrim--dark {
+  background:
+    linear-gradient(180deg, rgba(8,8,10,0.55), rgba(8,8,10,0) 22%, rgba(8,8,10,0) 66%, rgba(8,8,10,0.72)),
+    radial-gradient(120% 80% at 50% 50%, transparent 55%, rgba(8,8,10,0.42) 100%);
+}
+.movie-scrim--light {
+  opacity: 0;
+  background:
+    linear-gradient(180deg, rgba(250,249,246,0.62), rgba(250,249,246,0) 24%, rgba(250,249,246,0) 62%, rgba(250,249,246,0.72)),
+    radial-gradient(120% 80% at 50% 50%, transparent 52%, rgba(250,249,246,0.46) 100%);
+}
+
+/* -------- overlay copy — three blocks stacked in the one stage -------- */
+.movie-copy {
+  position: absolute; inset: 0; z-index: 4;
+  display: grid; place-items: center;
+  text-align: center;
+  padding: 0 var(--gutter);
+  color: var(--mv-fg);
+  opacity: 0;
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+/* Only the interactive bits take clicks. JS sets visibility:hidden on the
+   copies that aren't live, which also keeps them out of the tab order and
+   the accessibility tree — pointer-events alone would not, because a child
+   set to `auto` stays clickable under a parent set to `none`. */
+.movie-copy .actions,
+.movie-copy .form { pointer-events: auto; }
+
+.movie-copy .mini {
+  font-family: var(--sans); font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.34em;
+  display: inline-flex; align-items: center; gap: 14px;
+}
+.movie-copy .mini::before,
+.movie-copy .mini::after { content: ""; width: 34px; height: 1px; background: currentColor; opacity: .5; }
+
+.movie-copy h1, .movie-copy h2 {
+  font-family: var(--serif); font-weight: 300; letter-spacing: -0.02em;
+  line-height: 1.04;
+  font-size: clamp(30px, 6.4vw, 78px);
+  margin: 22px auto 0; max-width: 15em;
+}
+.movie-copy h1 em, .movie-copy h2 em { font-style: italic; }
+.movie-copy .sub {
+  margin: 20px auto 0; max-width: 46ch;
+  font-weight: 300; font-size: clamp(14px, 1.55vw, 18px);
+}
+.movie-copy .facts {
+  display: flex; gap: clamp(18px, 4vw, 56px);
+  justify-content: center; margin-top: 36px; flex-wrap: wrap;
+}
+/* the base sheet gives .fact a cream chip for the products page — on the
+   film it has to be plain type over the picture */
+.movie-copy .fact { background: none; padding: 0; border-radius: 0; }
+.movie-copy .fact strong {
+  display: block; font-family: var(--serif); font-weight: 300;
+  font-size: clamp(26px, 3.4vw, 44px);
+}
+.movie-copy .fact span {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; opacity: .7;
+}
+.movie-copy .actions {
+  display: flex; gap: 16px; justify-content: center;
+  margin-top: 40px; flex-wrap: wrap;
+}
+.movie-copy .form {
+  display: flex; gap: 12px; justify-content: center; margin-top: 40px;
+  max-width: 520px; margin-left: auto; margin-right: auto;
+}
+.movie-copy .form input {
+  flex: 1; min-width: 0; padding: 17px 24px; border-radius: 100px;
+  border: 1px solid var(--mv-line); background: transparent; color: var(--mv-fg);
+  font-family: var(--sans); font-size: 15px;
+}
+.movie-copy .form input::placeholder { color: var(--mv-muted); }
+.movie-copy .form input:focus { outline: none; border-color: var(--mv-fg); }
+.movie-copy .form-note { margin-top: 14px; font-size: 13px; opacity: .7; min-height: 18px; }
+
+/* Buttons inside the film follow the luminance signal rather than a fixed
+   light/dark variant — the footage under them changes mid-clip. */
+.movie-copy .btn--solid {
+  background: var(--mv-fg); color: var(--mv-bg); border-color: transparent;
+}
+.movie-copy .btn--ghost {
+  background: transparent; color: var(--mv-fg); border-color: var(--mv-line);
+}
+.movie-copy .btn--ghost:hover { border-color: var(--mv-fg); }
+
+/* -------- header follows the film while the film owns the viewport -------- */
+body.in-film .header--dark { color: var(--mv-fg); border-color: transparent; }
+body.in-film .header--dark .nav-links a { color: var(--mv-fg); }
+body.in-film .header--dark .nav-links a::after { background: var(--mv-fg); }
+body.in-film .header--dark .nav-toggle { color: var(--mv-fg); }
+/* NB: the base sheet puts the invert on .brand (the link), not the <img>.
+   Overriding the child would be undone by the parent's filter, so this has
+   to target .brand itself. */
+body.in-film .header--dark .brand {
+  filter: brightness(0) invert(calc(var(--mv-inv) * 100%));
+}
+body.in-film .header--dark.scrolled {
+  background: var(--mv-bar, rgba(10,10,10,0.9));
+  border-bottom-color: var(--mv-line);
+}
+body.in-film .header--dark .nav-cta.btn--light {
+  background: var(--mv-fg); color: var(--mv-bg);
+}
+
+/* -------- progress rail -------- */
+.movie-progress {
+  position: fixed; left: 0; right: 0; bottom: 0; height: 3px; z-index: 60;
+  background: rgba(127,127,127,0.25);
+  opacity: 0; transition: opacity .4s;
+  pointer-events: none;
+}
+body.in-film .movie-progress { opacity: 1; }
+.movie-progress__fill {
+  height: 100%; width: 0;
+  background: var(--mv-fg, #fff);
+  will-change: width;
+}
+
+/* -------- scroll hint -------- */
+.movie-hint {
+  position: absolute; z-index: 5; left: 50%; bottom: 5.5vh;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 9px;
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--mv-muted);
+  pointer-events: none; opacity: 0;
+}
+.movie-hint .mouse {
+  width: 22px; height: 34px; border: 1.5px solid currentColor;
+  border-radius: 12px; position: relative; opacity: .7;
+}
+.movie-hint .mouse::after {
+  content: ""; position: absolute; top: 6px; left: 50%;
+  transform: translateX(-50%); width: 3px; height: 6px;
+  border-radius: 2px; background: currentColor;
+  animation: mv-wheel 1.6s infinite;
+}
+@keyframes mv-wheel {
+  0%   { opacity: 1; top: 6px; }
+  60%  { opacity: 0; top: 20px; }
+  100% { opacity: 0; top: 6px; }
+}
+
+@media (max-width: 720px) {
+  .movie { --film-scrub: 700vh; }
+  .movie-copy .sub { max-width: 34ch; }
+  .movie-copy .facts { gap: 18px; }
+}
+
+/* -------- static fallback: no scrubbing, no pinning -------- */
+@media (prefers-reduced-motion: reduce) {
+  .movie { height: auto; }
+  .movie-stage { position: relative; height: auto; }
+  .movie-frame { position: relative; }
+  .movie-clip { position: relative; height: 56vh; }
+  .movie-clip:not([data-clip="0"]) { display: none; }
+  .movie-scrim { display: none; }
+  .movie-copy {
+    position: relative; inset: auto;
+    opacity: 1 !important; transform: none !important;
+    visibility: visible !important;
+    padding: clamp(48px, 8vw, 96px) var(--gutter);
+    background: var(--ink); color: #fff;
+    pointer-events: auto;
+  }
+  .movie-copy .actions, .movie-copy .form { pointer-events: auto; }
+  .movie-hint, .movie-progress { display: none; }
+}
