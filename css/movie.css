@@ -19,11 +19,14 @@
   --mv-line: rgba(255,255,255,0.28);
   --mv-bar: rgba(10,10,10,0.9);
   --mv-inv: 1;
+  /* directional veil behind the side copy */
+  --mv-veil: rgba(6,7,9,0.82);
+  --mv-veil-mid: rgba(6,7,9,0.42);
 }
 
 .movie {
   position: relative;
-  --film-scrub: 860vh;
+  --film-scrub: 1100vh;
   --film-tail: 60vh;
   height: calc(100vh + var(--film-scrub) + var(--film-tail));
 }
@@ -61,29 +64,54 @@
   pointer-events: none;
   will-change: opacity;
 }
+/* Kept light — the directional veil does the legibility work now, so the
+   centre of frame (where the bottle is) stays clean. These only protect the
+   header and the bottom edge. */
 .movie-scrim--dark {
-  background:
-    linear-gradient(180deg, rgba(8,8,10,0.55), rgba(8,8,10,0) 22%, rgba(8,8,10,0) 66%, rgba(8,8,10,0.72)),
-    radial-gradient(120% 80% at 50% 50%, transparent 55%, rgba(8,8,10,0.42) 100%);
+  background: linear-gradient(180deg,
+    rgba(8,8,10,0.62), rgba(8,8,10,0) 20%, rgba(8,8,10,0) 78%, rgba(8,8,10,0.42));
 }
 .movie-scrim--light {
   opacity: 0;
-  background:
-    linear-gradient(180deg, rgba(250,249,246,0.62), rgba(250,249,246,0) 24%, rgba(250,249,246,0) 62%, rgba(250,249,246,0.72)),
-    radial-gradient(120% 80% at 50% 50%, transparent 52%, rgba(250,249,246,0.46) 100%);
+  background: linear-gradient(180deg,
+    rgba(250,249,246,0.68), rgba(250,249,246,0) 22%, rgba(250,249,246,0) 78%, rgba(250,249,246,0.4));
 }
 
-/* -------- overlay copy — three blocks stacked in the one stage -------- */
+/* -------- directional veil — only darkens the side the copy is on, so the
+   bottle in the centre of frame stays clear -------- */
+.movie-veil {
+  position: absolute; inset: 0; z-index: 3;
+  pointer-events: none; opacity: 0;
+  will-change: opacity;
+}
+.movie-veil.is-left {
+  background: linear-gradient(90deg,
+    var(--mv-veil) 0%, var(--mv-veil-mid) 34%, transparent 62%);
+}
+.movie-veil.is-right {
+  background: linear-gradient(270deg,
+    var(--mv-veil) 0%, var(--mv-veil-mid) 34%, transparent 62%);
+}
+
+/* -------- overlay copy — one block per beat, stacked in the one stage -------- */
 .movie-copy {
   position: absolute; inset: 0; z-index: 4;
-  display: grid; place-items: center;
-  text-align: center;
-  padding: 0 var(--gutter);
+  display: grid;
+  align-items: center;
+  /* copy sits in a side column; the centre of frame stays clear for the bottle */
+  grid-template-columns: minmax(0, 42%) 1fr;
+  text-align: left;
+  padding: 0 clamp(24px, 5.5vw, 92px);
   color: var(--mv-fg);
   opacity: 0;
   will-change: opacity, transform;
   pointer-events: none;
 }
+.movie-copy[data-side="right"] {
+  grid-template-columns: 1fr minmax(0, 42%);
+}
+.movie-copy[data-side="right"] .movie-copy__inner { grid-column: 2; }
+.movie-copy__inner { max-width: 30rem; }
 /* Only the interactive bits take clicks. JS sets visibility:hidden on the
    copies that aren't live, which also keeps them out of the tab order and
    the accessibility tree — pointer-events alone would not, because a child
@@ -91,46 +119,60 @@
 .movie-copy .actions,
 .movie-copy .form { pointer-events: auto; }
 
+/* eyebrow — echoes the bottle wordmark: wide tracking, single rule trailing */
 .movie-copy .mini {
-  font-family: var(--sans); font-size: 12px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.34em;
-  display: inline-flex; align-items: center; gap: 14px;
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.28em;
+  display: flex; align-items: center; gap: 14px;
 }
-.movie-copy .mini::before,
-.movie-copy .mini::after { content: ""; width: 34px; height: 1px; background: currentColor; opacity: .5; }
+.movie-copy .mini::after {
+  content: ""; flex: 1; max-width: 56px; height: 1px;
+  background: currentColor; opacity: .45;
+}
 
 .movie-copy h1, .movie-copy h2 {
-  font-family: var(--serif); font-weight: 300; letter-spacing: -0.02em;
-  line-height: 1.04;
-  font-size: clamp(30px, 6.4vw, 78px);
-  margin: 22px auto 0; max-width: 15em;
+  font-family: var(--serif); font-weight: 300; letter-spacing: -0.035em;
+  line-height: 1.06;
+  font-size: clamp(29px, 3.9vw, 56px);
+  margin: 20px 0 0; max-width: 14em;
 }
-.movie-copy h1 em, .movie-copy h2 em { font-style: italic; }
+.movie-copy h1 em, .movie-copy h2 em { font-style: italic; font-weight: 300; }
 .movie-copy .sub {
-  margin: 20px auto 0; max-width: 46ch;
-  font-weight: 300; font-size: clamp(14px, 1.55vw, 18px);
+  margin: 18px 0 0; max-width: 40ch;
+  font-weight: 300; font-size: clamp(14px, 1.05vw, 16.5px);
+  line-height: 1.65; color: var(--mv-muted);
 }
+
+/* facts stack vertically — a side column has no room for a row of three.
+   (the base sheet gives .fact a cream chip for the products page; on the
+   film it has to be plain type over the picture) */
 .movie-copy .facts {
-  display: flex; gap: clamp(18px, 4vw, 56px);
-  justify-content: center; margin-top: 36px; flex-wrap: wrap;
+  display: flex; flex-direction: column; gap: 0;
+  margin-top: 28px; border-top: 1px solid var(--mv-line);
 }
-/* the base sheet gives .fact a cream chip for the products page — on the
-   film it has to be plain type over the picture */
-.movie-copy .fact { background: none; padding: 0; border-radius: 0; }
+.movie-copy .fact {
+  background: none; border-radius: 0;
+  display: flex; align-items: baseline; gap: 16px;
+  padding: 10px 0; border-bottom: 1px solid var(--mv-line);
+}
 .movie-copy .fact strong {
-  display: block; font-family: var(--serif); font-weight: 300;
-  font-size: clamp(26px, 3.4vw, 44px);
+  display: block; font-family: var(--serif); font-weight: 400;
+  font-size: clamp(15px, 1.15vw, 18px); letter-spacing: -0.01em;
+  flex: 0 0 auto; min-width: 6.6em;
 }
 .movie-copy .fact span {
-  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; opacity: .7;
+  /* the base sheet colours these var(--grey), which disappears on the film */
+  color: var(--mv-fg);
+  font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase;
+  opacity: .78; line-height: 1.5;
 }
 .movie-copy .actions {
-  display: flex; gap: 16px; justify-content: center;
-  margin-top: 40px; flex-wrap: wrap;
+  display: flex; gap: 14px; justify-content: flex-start;
+  margin-top: 32px; flex-wrap: wrap;
 }
 .movie-copy .form {
-  display: flex; gap: 12px; justify-content: center; margin-top: 40px;
-  max-width: 520px; margin-left: auto; margin-right: auto;
+  display: flex; gap: 12px; justify-content: flex-start; margin-top: 30px;
+  max-width: 450px;
 }
 .movie-copy .form input {
   flex: 1; min-width: 0; padding: 17px 24px; border-radius: 100px;
@@ -162,9 +204,15 @@ body.in-film .header--dark .nav-toggle { color: var(--mv-fg); }
 body.in-film .header--dark .brand {
   filter: brightness(0) invert(calc(var(--mv-inv) * 100%));
 }
+/* No bar across the picture. The film's top scrim already carries the nav,
+   and a solid header cuts a band straight through the bottle. */
+body.in-film .header--dark,
 body.in-film .header--dark.scrolled {
-  background: var(--mv-bar, rgba(10,10,10,0.9));
-  border-bottom-color: var(--mv-line);
+  background: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 body.in-film .header--dark .nav-cta.btn--light {
   background: var(--mv-fg); color: var(--mv-bg);
@@ -209,10 +257,27 @@ body.in-film .movie-progress { opacity: 1; }
   100% { opacity: 0; top: 6px; }
 }
 
-@media (max-width: 720px) {
-  .movie { --film-scrub: 700vh; }
-  .movie-copy .sub { max-width: 34ch; }
-  .movie-copy .facts { gap: 18px; }
+/* Narrow viewports: the bottle fills the frame, so there is no side room.
+   Copy drops to a full-width block at the bottom and the veil goes vertical. */
+@media (max-width: 900px) {
+  .movie { --film-scrub: 920vh; }
+  .movie-copy {
+    grid-template-columns: 1fr;
+    align-items: end;
+    padding: 0 var(--gutter) clamp(64px, 14vh, 130px);
+  }
+  .movie-copy[data-side="right"] { grid-template-columns: 1fr; }
+  .movie-copy[data-side="right"] .movie-copy__inner { grid-column: 1; }
+  .movie-copy__inner { max-width: 100%; }
+  .movie-copy h1, .movie-copy h2 { font-size: clamp(28px, 7.4vw, 44px); }
+  .movie-copy .sub { font-size: 14.5px; max-width: 100%; }
+  .movie-copy .form { max-width: 100%; }
+  .movie-copy .fact strong { min-width: 5.6em; }
+
+  .movie-veil.is-left, .movie-veil.is-right {
+    background: linear-gradient(0deg,
+      var(--mv-veil) 0%, var(--mv-veil-mid) 42%, transparent 74%);
+  }
 }
 
 /* -------- static fallback: no scrubbing, no pinning -------- */

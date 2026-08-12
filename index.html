@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Peak Hydration — You've had water. Now try hydration.</title>
-<meta name="description" content="Pure, mineral-rich hydration inspired by nature and perfected by science. Scroll through the film: watch the bottle spin, transform to sparkling, and burst into a splash. Peak Hydration — 84 minerals, pH 7, proudly South African.">
+<meta name="description" content="Pure, mineral-rich hydration inspired by nature, and perfected by science. Purified through seven stages, then rebuilt with 84 minerals and trace elements. Still and sparkling. Proudly South African.">
 <meta name="theme-color" content="#0a0a0a">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/movie.css">
 </head>
@@ -53,10 +53,13 @@
      ===================================================================== -->
 <div class="movie" id="movie" aria-label="Peak Hydration film">
 
-  <!-- scroll targets for #move-1/2/3 — JS parks them at the right moment -->
+  <!-- scroll targets, one per beat — JS parks them at the right moment -->
   <span class="movie-anchor" id="move-1"></span>
   <span class="movie-anchor" id="move-2"></span>
   <span class="movie-anchor" id="move-3"></span>
+  <span class="movie-anchor" id="move-4"></span>
+  <span class="movie-anchor" id="move-5"></span>
+  <span class="movie-anchor" id="move-6"></span>
 
   <div class="movie-stage">
 
@@ -75,49 +78,87 @@
 
     <div class="movie-scrim movie-scrim--dark" aria-hidden="true"></div>
     <div class="movie-scrim movie-scrim--light" aria-hidden="true"></div>
+    <!-- directional veil — darkens only the side the copy sits on -->
+    <div class="movie-veil" aria-hidden="true"></div>
 
-    <!-- ---------- BEAT 1 · STILL ---------- -->
-    <div class="movie-copy" data-copy="0">
+    <!-- ---------- BEAT 1 · THE PROMISE (still, black label) ---------- -->
+    <div class="movie-copy" data-copy="0" data-side="left">
       <div class="movie-copy__inner">
-        <p class="mini">Mineral-Infused Water</p>
+        <p class="mini">Mineral-Infused Still Water</p>
         <h1>You've had water.<br><em>Now try hydration.</em></h1>
-        <p class="sub">Pure, mineral-rich hydration inspired by nature and perfected by science. Fully purified, precisely remineralised — for people who move with purpose.</p>
-        <div class="facts">
-          <div class="fact"><strong>84</strong><span>Minerals &amp; trace elements</span></div>
-          <div class="fact"><strong>pH 7</strong><span>Gentle alkaline</span></div>
-          <div class="fact"><strong>7-stage</strong><span>Advanced purification</span></div>
-        </div>
+        <p class="sub">Pure, mineral-rich hydration inspired by nature, and perfected by science — for people who move with purpose.</p>
         <div class="actions">
-          <a href="#move-2" class="btn btn--solid">Meet the Sparkling <span class="arrow">↓</span></a>
+          <a href="#move-2" class="btn btn--solid">See how it's made <span class="arrow">↓</span></a>
           <a href="products.html" class="btn btn--ghost">Explore Products</a>
         </div>
       </div>
     </div>
 
-    <!-- ---------- BEAT 2 · SPARKLING ---------- -->
-    <div class="movie-copy" data-copy="1">
+    <!-- ---------- BEAT 2 · THE STILL WATER — plays while the film is frozen
+         on clip 1's still bottle, the only genuinely still-label footage,
+         so the still range gets its own moment ---------- -->
+    <div class="movie-copy" data-copy="1" data-side="right">
       <div class="movie-copy__inner">
-        <p class="mini">Mineral-Infused Sparkling</p>
-        <h2>The same water, <em>with a sparkle.</em></h2>
-        <p class="sub">Built on the same clean, mineral-rich base, carbonated only after mineralisation — for a cleaner taste and fine, lasting bubbles. Same 84 minerals. Same pH&nbsp;7. Newly alive.</p>
+        <p class="mini">Still · Black Cap</p>
+        <h2>Mineral Infused<br><em>Still Water.</em></h2>
+        <p class="sub">Purified to a clean, consistent base, then infused with 84 essential minerals and trace elements — balanced to a gentle alkaline level that mirrors your body's natural state. Smooth, bioavailable, true hydration from the first sip.</p>
         <div class="facts">
-          <div class="fact"><strong>White cap</strong><span>Sparkling edition</span></div>
-          <div class="fact"><strong>Fine</strong><span>Bubbles that last</span></div>
-          <div class="fact"><strong>pH 7</strong><span>Gentle alkaline</span></div>
+          <div class="fact"><strong>Formats</strong><span>Single-serve bottle &amp; 5&nbsp;litre</span></div>
+          <div class="fact"><strong>Base</strong><span>Purified, then remineralised</span></div>
         </div>
         <div class="actions">
-          <a href="#move-3" class="btn btn--solid">Keep Watching <span class="arrow">↓</span></a>
-          <a href="products.html#sparkling" class="btn btn--ghost">Explore Sparkling</a>
+          <a href="products.html#still" class="btn btn--solid">See the still range <span class="arrow">→</span></a>
         </div>
       </div>
     </div>
 
-    <!-- ---------- BEAT 3 · JOIN THE MOVEMENT ---------- -->
-    <div class="movie-copy cta-copy" data-copy="2">
+    <!-- ---------- BEAT 3 · THE GAP ---------- -->
+    <div class="movie-copy" data-copy="2" data-side="left">
+      <div class="movie-copy__inner">
+        <p class="mini">The Gap</p>
+        <h2>Clean, or mineral-rich.<br><em>Why not both?</em></h2>
+        <p class="sub">Spring water carries natural minerals, but it reflects whatever is happening around its source. Purified water is clean, but empty. Peak Hydration exists because you shouldn't have to choose.</p>
+        <div class="actions">
+          <a href="our-water.html" class="btn btn--ghost">Why we exist <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- BEAT 4 · HOW IT'S MADE ---------- -->
+    <div class="movie-copy" data-copy="3" data-side="right">
+      <div class="movie-copy__inner">
+        <p class="mini">Purified by technology. Perfected by nature.</p>
+        <h2>Clean water,<br><em>mineralised properly.</em></h2>
+        <p class="sub">Every drop passes through a seven-stage purification system, then we restore minerals and trace elements sourced from the earth's own deposits. Nothing accidental. Nothing left to chance.</p>
+        <div class="facts">
+          <div class="fact"><strong>Seven-stage</strong><span>Reverse osmosis, UV, alkalisation, final filtration</span></div>
+          <div class="fact"><strong>84</strong><span>Minerals &amp; trace elements restored</span></div>
+          <div class="fact"><strong>Gentle alkaline</strong><span>Balanced to mirror your body</span></div>
+        </div>
+        <div class="actions">
+          <a href="our-water.html" class="btn btn--ghost">Read the full process <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- BEAT 5 · SPARKLING — only once the white label is on screen -->
+    <div class="movie-copy" data-copy="4" data-side="left">
+      <div class="movie-copy__inner">
+        <p class="mini">Mineral-Infused Sparkling</p>
+        <h2>The same water,<br><em>with a sparkle.</em></h2>
+        <p class="sub">Carbonated only after mineralisation is complete. That order is what gives it a cleaner taste and fine, consistent bubbles that last long after the bottle is opened.</p>
+        <div class="actions">
+          <a href="products.html#sparkling" class="btn btn--solid">Explore Sparkling <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- BEAT 6 · JOIN THE MOVEMENT ---------- -->
+    <div class="movie-copy cta-copy" data-copy="5" data-side="right">
       <div class="movie-copy__inner">
         <p class="mini">Join the Movement</p>
-        <h2>Real minerals. <em>Real hydration.</em></h2>
-        <p class="sub">Sharper focus. Total support. Pure balance. Be the first to know when Peak Hydration reaches your town.</p>
+        <h2>For people who are<br><em>going somewhere.</em></h2>
+        <p class="sub">Drink better, feel better, move better. Be the first to know when Peak Hydration reaches your town.</p>
         <form class="form" action="send-message.php" method="POST" data-form>
           <input type="hidden" name="subject" value="Website — Join the movement">
           <input type="hidden" name="form" value="newsletter">
@@ -135,42 +176,71 @@
 <!-- overall film progress rail -->
 <div class="movie-progress" aria-hidden="true"><div class="movie-progress__fill"></div></div>
 
-<!-- ===================== POST-MOVIE: THE RANGE ===================== -->
-<section class="section section--cream">
+<!-- ===================== POST-MOVIE: THE COMPARISON ===================== -->
+<section class="section">
   <div class="container">
-    <span class="eyebrow reveal">The Range</span>
-    <h2 class="display-md reveal" data-d="1" style="max-width:12em;margin:26px 0 56px;">Two expressions. <em class="italic">One perfect base.</em></h2>
-    <div class="products-grid">
-      <article class="product-card product-card--still reveal">
-        <div class="product-card__bg"><img src="assets/still-square.jpg" alt="Mineral infused still water" loading="lazy"></div>
-        <div class="product-card__body">
-          <span class="tag">Still · Black Cap</span>
-          <h3>Mineral Infused Still Water</h3>
-          <p class="meta">Purified, then rebuilt with 84 essential minerals — smooth, bioavailable, true hydration from the first sip.</p>
-          <div class="product-card__links">
-            <a href="products.html#still" class="btn btn--light">Explore <span class="arrow">→</span></a>
-            <a href="contact.html">Enquire</a>
-          </div>
-        </div>
-      </article>
-      <article class="product-card product-card--spark reveal" data-d="1">
-        <div class="product-card__bg"><img src="assets/sparkling-square.jpg" alt="Mineral infused sparkling water" loading="lazy"></div>
-        <div class="product-card__body">
-          <span class="tag">Sparkling · White Cap</span>
-          <h3>Mineral Infused Sparkling Water</h3>
-          <p class="meta">A balanced blend of trace minerals on the same clean base — carbonated only after mineralisation for crisp, lasting bubbles.</p>
-          <div class="product-card__links">
-            <a href="products.html#sparkling" class="btn btn--dark">Explore <span class="arrow">→</span></a>
-            <a href="contact.html">Enquire</a>
-          </div>
-        </div>
-      </article>
+    <span class="eyebrow reveal">The Gap</span>
+    <h2 class="display-md reveal" data-d="1" style="max-width:14em;margin:26px 0 28px;">Why not just drink <em class="italic">spring or purified water?</em></h2>
+    <p class="lead reveal" data-d="1" style="max-width:60ch;margin-bottom:48px;"><strong>Most bottled water asks you to choose between clean and mineral-rich.</strong> Spring water carries natural minerals but reflects whatever is happening around its source, so it changes over time. Distilled and reverse-osmosis water is clean but empty. Peak Hydration is purified completely, then rebuilt — so it is both.</p>
+
+    <div class="table-wrap reveal" data-d="2">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th scope="col">Water</th>
+            <th scope="col">Purity</th>
+            <th scope="col">Minerals</th>
+            <th scope="col">Consistency bottle to bottle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Spring water</th>
+            <td>Reflects the surrounding environment — geology, rainfall, farming, mining, nearby development</td>
+            <td>Naturally present</td>
+            <td>Mineral content can change over time</td>
+          </tr>
+          <tr>
+            <th scope="row">Municipal tap water</th>
+            <td>Treated at source, then travels through decades-old infrastructure</td>
+            <td>Present, but variable</td>
+            <td>Varies by area and pipe condition</td>
+          </tr>
+          <tr>
+            <th scope="row">Distilled &amp; reverse-osmosis water</th>
+            <td>Very clean</td>
+            <td>Stripped out — no minerals, no electrolytes</td>
+            <td>Consistent</td>
+          </tr>
+          <tr class="is-us">
+            <th scope="row">Peak Hydration</th>
+            <td>Seven-stage purification: reverse osmosis, UV treatment, alkalisation and final filtration</td>
+            <td>84 minerals and trace elements restored after purification</td>
+            <td>Consistent, bottle to bottle</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pillars reveal" data-d="2">
+      <div class="pillar">
+        <h3>Sharper focus</h3>
+        <p>Stay awake and alert for longer.</p>
+      </div>
+      <div class="pillar">
+        <h3>Total support</h3>
+        <p>Sustained hydration for work, training and travel.</p>
+      </div>
+      <div class="pillar">
+        <h3>Pure balance</h3>
+        <p>A gentle alkaline level for optimal support.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ===================== POST-MOVIE: GALLERY ===================== -->
-<section class="section">
+<section class="section section--cream">
   <div class="container">
     <span class="eyebrow reveal">The Experience</span>
     <h2 class="display-md reveal" data-d="1" style="margin:26px 0 56px;">Hydration that <em class="italic">keeps up.</em></h2>

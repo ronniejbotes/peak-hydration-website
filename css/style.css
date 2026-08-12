@@ -18,9 +18,12 @@
   --forest:     #33402f;   /* nature accent (from waterfall) */
   --stone:      #9aa093;   /* muted sage */
 
-  /* Type */
-  --serif: "Fraunces", Georgia, "Times New Roman", serif;
-  --sans:  "Manrope", "Helvetica Neue", Arial, sans-serif;
+  /* Type — DM Sans, matching peakhydration.co.za and the bottle wordmark.
+     --serif is kept as a name so existing rules don't need rewriting; both
+     now resolve to DM Sans, separated by weight and tracking rather than
+     by typeface. */
+  --serif: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --sans:  "DM Sans", "Helvetica Neue", Arial, sans-serif;
 
   /* Layout */
   --container: 1240px;
@@ -79,9 +82,11 @@ button { font: inherit; cursor: pointer; background: none; border: none; }
 
 h1, h2, h3, .display {
   font-family: var(--serif);
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.015em;
+  font-weight: 300;
+  line-height: 1.06;
+  /* DM Sans is a geometric sans — display sizes need tighter tracking than a
+     serif did to hold together */
+  letter-spacing: -0.035em;
 }
 .display-xl { font-size: clamp(44px, 8.5vw, 118px); }
 .display-lg { font-size: clamp(38px, 6vw, 84px); }
@@ -489,3 +494,53 @@ h1, h2, h3, .display {
   .product-card { min-height: 520px; }
   .section { padding: 64px 0; }
 }
+/* ---------- Comparison table ---------- */
+/* Real <table> markup, not a div grid — search engines and AI assistants
+   extract tables; they cannot extract a grid that merely looks like one. */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.compare {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 15px;
+}
+.compare th, .compare td {
+  padding: 20px 22px 20px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  font-weight: 400;
+  line-height: 1.55;
+}
+.compare thead th {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--grey);
+  padding-bottom: 14px;
+  border-bottom-color: var(--ink);
+}
+.compare tbody th {
+  font-family: var(--serif);
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  padding-right: 32px;
+  white-space: nowrap;
+}
+.compare td { color: var(--grey); }
+.compare tr.is-us th, .compare tr.is-us td { color: var(--ink); }
+.compare tr.is-us { background: var(--paper-2); }
+.compare tr.is-us th, .compare tr.is-us td { padding-left: 18px; }
+.compare tr.is-us th:first-child { border-radius: 12px 0 0 12px; }
+.compare tr.is-us td:last-child { border-radius: 0 12px 12px 0; }
+
+@media (max-width: 720px) {
+  .compare { font-size: 14px; }
+  .compare tbody th { font-size: 16px; }
+}
+
+/* Pillars reuse the existing card component above — this only spaces the
+   homepage instance away from the comparison table. */
+.pillars { margin-top: clamp(56px, 7vw, 88px); }
